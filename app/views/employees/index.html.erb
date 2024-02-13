@@ -27,12 +27,13 @@
   %>
   <br>
   <%= f.label :company_name_in %>
-  <%= f.select :company_name_in, 
+  <%#= f.select :company_name_in, 
     Company.pluck(:name).uniq.sort,
     {include_blank: true, multiple: true},
     style: 'width: 200px;',
     onchange: 'this.form.requestSubmit();' 
   %>
+  <%= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') %>
   <br>
   <%= f.label :active_eq %>
   <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;', onchange: 'this.form.requestSubmit();' %> <br>
