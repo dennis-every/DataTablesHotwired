@@ -15,6 +15,6 @@
     email: Faker::Internet.email,
     birthday: Faker::Date.birthday(min_age: 18, max_age: 65),
     country: Faker::Address.country,
-    active: Faker::Boolean
+    active: Faker::Boolean.boolean(true_ratio: 0.5)
   )
 end

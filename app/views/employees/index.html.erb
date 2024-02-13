@@ -1,14 +1,32 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Employees</h1>
 
-<div id="employees">
-  <% @employees.each do |employee| %>
-    <%= render employee %>
-    <p>
-      <%= link_to "Show this employee", employee %>
-    </p>
-  <% end %>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :first_name) %></th>
+      <th><%= sort_link(@q, :last_name) %></th>
+      <th>Phone</th>
+      <th><%= sort_link(@q, :email) %></th>
+      <th><%= sort_link(@q, :birthday) %></th>
+      <th><%= sort_link(@q, :country) %></th>
+      <th><%= sort_link(@q, :active) %></th>
+      <th colspan="1">Actions</th>
+    </tr>
+  </thead>
 
-<%= link_to "New employee", new_employee_path %>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.phone %></td>
+        <td><%= employee.email %></td>
+        <td><%= employee.birthday %></td>
+        <td><%= employee.country %></td>
+        <td><%= employee.active %></td>
+        <td><%= link_to 'Show', employee %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
