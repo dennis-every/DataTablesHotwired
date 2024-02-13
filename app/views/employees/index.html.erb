@@ -1,8 +1,8 @@
 <h1><%= link_to 'Employees', employees_path %></h1>
 
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q, data: { turbo_frame: :results, turbo_action: 'advance' } do |f| %>
   <%= f.label :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
-  <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
+  <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont, oninput: 'this.form.requestSubmit();' %>
   <br>
   <hr>
   <br>
@@ -19,7 +19,12 @@
   <%= f.label :birthday_lteq %>
   <%= f.date_field :birthday_lteq %> <br>
   <%= f.label :country_eq %>
-  <%= f.select :country_eq, Employee.pluck(:country).uniq, {include_blank: true}, style: 'width: 200px;' %> <br>
+  <%= f.select :country_eq,
+    Employee.pluck(:country).uniq.sort,
+    {include_blank: true},
+    style: 'width: 200px;',
+    onchange: 'this.form.requestSubmit();'
+  %> <br>
   <%= f.label :active_eq %>
   <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;' %> <br>
   <%= f.label :company_name_cont %>
@@ -27,37 +32,40 @@
   <%= f.submit %>
 <% end %>
 
-<%== pagy_nav(@pagy) %>
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th><%= sort_link(@q, :first_name) %></th>
-      <th><%= sort_link(@q, :last_name) %></th>
-      <th>Phone</th>
-      <th><%= sort_link(@q, :email) %></th>
-      <th><%= sort_link(@q, :birthday) %></th>
-      <th><%= sort_link(@q, :country) %></th>
-      <th><%= sort_link(@q, :active) %></th>
-      <th><%= sort_link(@q, :company_name, "Company") %></th>
-      <th colspan="1">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @employees.each_with_index do |employee, index| %>
+<%= turbo_frame_tag :results do %>
+  <h1><%= Time.zone.now %></h1>
+  <%== pagy_nav(@pagy) %>
+  <table>
+    <thead>
       <tr>
-        <td><%= index + 1 %></td>
-        <td><%= highlight employee.first_name, params.dig(:q, :first_name_cont) %></td>
-        <td><%= highlight employee.last_name, params.dig(:q, :last_name_cont) %></td>
-        <td><%= employee.phone %></td>
-        <td><%= highlight employee.email, params.dig(:q, :email_cont) %></td>
-        <td><%= employee.birthday %></td>
-        <td><%= employee.country %></td>
-        <td><%= employee.active %></td>
-        <td><%= highlight employee.company.name, params.dig(:q, :company_name_cont) %></td>
-        <td><%= link_to 'Show', employee %></td>
+        <th>#</th>
+        <th><%= sort_link(@q, :first_name) %></th>
+        <th><%= sort_link(@q, :last_name) %></th>
+        <th>Phone</th>
+        <th><%= sort_link(@q, :email) %></th>
+        <th><%= sort_link(@q, :birthday) %></th>
+        <th><%= sort_link(@q, :country) %></th>
+        <th><%= sort_link(@q, :active) %></th>
+        <th><%= sort_link(@q, :company_name, "Company") %></th>
+        <th colspan="1">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<%== pagy_nav(@pagy) %>
+    </thead>
+    <tbody>
+      <% @employees.each_with_index do |employee, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= highlight employee.first_name, params.dig(:q, :first_name_cont) %></td>
+          <td><%= highlight employee.last_name, params.dig(:q, :last_name_cont) %></td>
+          <td><%= employee.phone %></td>
+          <td><%= highlight employee.email, params.dig(:q, :email_cont) %></td>
+          <td><%= employee.birthday %></td>
+          <td><%= employee.country %></td>
+          <td><%= employee.active %></td>
+          <td><%= highlight employee.company.name, params.dig(:q, :company_name_cont) %></td>
+          <td><%= link_to 'Show', employee %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%== pagy_nav(@pagy) %>
+<% end %>
