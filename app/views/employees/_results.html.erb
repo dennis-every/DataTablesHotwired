@@ -1,0 +1,35 @@
+<h1><%= Time.zone.now %></h1>
+<%== pagy_nav(@pagy) %>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th><%= sort_link(@q, :first_name) %></th>
+      <th><%= sort_link(@q, :last_name) %></th>
+      <th>Phone</th>
+      <th><%= sort_link(@q, :email) %></th>
+      <th><%= sort_link(@q, :birthday) %></th>
+      <th><%= sort_link(@q, :country) %></th>
+      <th><%= sort_link(@q, :active) %></th>
+      <th><%= sort_link(@q, :company_name, "Company") %></th>
+      <th colspan="1">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each_with_index do |employee, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= highlight employee.first_name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+        <td><%= highlight employee.last_name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+        <td><%= employee.phone %></td>
+        <td><%= highlight employee.email, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+        <td><%= employee.birthday %></td>
+        <td><%= highlight employee.country, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+        <td><%= employee.active %></td>
+        <td><%= highlight employee.company.name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+        <td><%= link_to 'Show', employee, data: { turbo_frame: '_top' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%== pagy_nav(@pagy) %>
