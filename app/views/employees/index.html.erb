@@ -1,6 +1,6 @@
 <h1><%= link_to 'Employees', employees_path %></h1>
 
-<%= search_form_for @q, data: { turbo_frame: :results, turbo_action: 'advance' } do |f| %>
+<%= search_form_for @q, data: { turbo_frame: :results, turbo_action: 'advance' }, id: :search_form do |f| %>
   <%= f.label :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
   <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont, oninput: 'this.form.requestSubmit();' %>
   <br>
@@ -26,7 +26,7 @@
     onchange: 'this.form.requestSubmit();'
   %>
   <br>
-  <%= f.label :company_name_in %>
+  <%#= f.label :company_name_in %>
   <%#= f.select :company_name_in, 
     Company.pluck(:name).uniq.sort,
     {include_blank: true, multiple: true},
@@ -34,20 +34,22 @@
     onchange: 'this.form.requestSubmit();' 
   %>
   <%#= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') %>
-  <%= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') do |checkbox| %>
-    <div>
-      <%= checkbox.check_box %>
-      <%= checkbox.label %>
-    </div>
-  <% end %>
-  <br>
   <%= f.label :active_eq %>
   <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;', onchange: 'this.form.requestSubmit();' %> <br>
   <%= f.label :company_name_cont %>
   <%= f.search_field :company_name_cont, oninput: 'this.form.requestSubmit();' %> <br>
   <%= f.submit %>
 <% end %>
-
-<%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
-  <%= render 'results' %>
-<% end %>
+<br>
+<hr>
+<br>
+<div style="display: flex;">
+  <div>
+    <%= render 'sidebar' %>
+  </div>
+  <div>
+    <%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
+      <%= render 'results' %>
+    <% end %>
+  </div>
+</div>

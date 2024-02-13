@@ -1,0 +1,7 @@
+<label for="company_name_in">Companies</label>
+<%= collection_check_boxes(:q, :company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();', form: :search_form) do |checkbox| %>
+  <div>
+    <%= checkbox.check_box %>
+    <%= checkbox.label %>
+  </div>
+<% end %>
