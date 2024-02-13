@@ -1,8 +1,17 @@
-<label for="country_eq">Country</label><br>
+<label for="active_eq">Active:</label> <hr>
+<%= radio_button(:q, :active_eq, nil, onchange: 'this.form.requestSubmit();', form: :search_form) %>
+<%= label_tag 'q_active_eq', "All" %> <br>
+<%= radio_button(:q, :active_eq, "true", onchange: 'this.form.requestSubmit();', form: :search_form) %>
+<%= label_tag 'q_active_eq_true', "Active" %> <br>
+<%= radio_button(:q, :active_eq, false, onchange: 'this.form.requestSubmit();', form: :search_form) %>
+<%= label_tag 'q_active_eq_false', "Inactive" %>
+<br>
+<br>
+<label for="country_eq">Country:</label><br>
 <%= select(:q, :country_eq, Employee.pluck(:country).uniq.sort, {include_blank: true}, style: 'width: 200px;', onchange: 'this.form.requestSubmit();', form: :search_form) %>
 <br>
 <br>
-<label for="company_name_in">Companies</label>
+<label for="company_name_in">Companies:</label> <hr>
 <%= collection_check_boxes(:q, :company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();', form: :search_form) do |checkbox| %>
   <div>
     <%= checkbox.check_box %>
