@@ -5,6 +5,7 @@ class EmployeesController < ApplicationController
   def index
     @q = Employee.ransack(params[:q])
     @employees = @q.result(distinct: true)
+    @employees = @q.result.includes(:company)
   end
 
   # GET /employees/1 or /employees/1.json

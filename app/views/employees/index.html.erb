@@ -1,8 +1,8 @@
 <h1><%= link_to 'Employees', employees_path %></h1>
 
 <%= search_form_for @q do |f| %>
-  <%= f.label :first_name_or_last_name_or_email_or_country_cont %>
-  <%= f.search_field :first_name_or_last_name_or_email_or_country_cont %>
+  <%= f.label :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
+  <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
   <br>
   <hr>
   <br>
@@ -18,6 +18,8 @@
   <%= f.select :country_eq, Employee.pluck(:country).uniq, {include_blank: true}, style: 'width: 200px;' %> <br>
   <%= f.label :active_eq %>
   <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;' %> <br>
+  <%= f.label :company_name_cont %>
+  <%= f.search_field :company_name_cont %> <br>
   <%= f.submit %>
 <% end %>
 
@@ -31,6 +33,7 @@
       <th><%= sort_link(@q, :birthday) %></th>
       <th><%= sort_link(@q, :country) %></th>
       <th><%= sort_link(@q, :active) %></th>
+      <th><%= sort_link(@q, :company_name, "Company") %></th>
       <th colspan="1">Actions</th>
     </tr>
   </thead>
@@ -45,6 +48,7 @@
         <td><%= employee.birthday %></td>
         <td><%= employee.country %></td>
         <td><%= employee.active %></td>
+        <td><%= highlight employee.company.name, params.dig(:q, :company_name_cont) %></td>
         <td><%= link_to 'Show', employee %></td>
       </tr>
     <% end %>
