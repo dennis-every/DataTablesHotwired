@@ -14,6 +14,10 @@
   <%= f.search_field :email_cont %> <br>
   <%= f.label :birthday_eq %>
   <%= f.date_field :birthday_eq %> <br>
+  <%= f.label :birthday_gteq %>
+  <%= f.date_field :birthday_gteq %> <br>
+  <%= f.label :birthday_lteq %>
+  <%= f.date_field :birthday_lteq %> <br>
   <%= f.label :country_eq %>
   <%= f.select :country_eq, Employee.pluck(:country).uniq, {include_blank: true}, style: 'width: 200px;' %> <br>
   <%= f.label :active_eq %>
