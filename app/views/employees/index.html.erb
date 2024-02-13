@@ -62,7 +62,7 @@
           <td><%= employee.country %></td>
           <td><%= employee.active %></td>
           <td><%= highlight employee.company.name, params.dig(:q, :company_name_cont) %></td>
-          <td><%= link_to 'Show', employee %></td>
+          <td><%= link_to 'Show', employee, data: { turbo_frame: '_top' } %></td>
         </tr>
       <% end %>
     </tbody>
