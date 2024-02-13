@@ -1,11 +1,16 @@
 <h1><%= link_to 'Employees', employees_path %></h1>
 
 <%= search_form_for @q, data: { turbo_frame: :results, turbo_action: 'advance' }, id: :search_form do |f| %>
-  <%= f.label :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
-  <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont, oninput: 'this.form.requestSubmit();' %>
-  <%= f.submit %>
+  <%#= f.label :first_name_or_last_name_or_email_or_country_or_company_name_cont %>
+  <%= f.search_field :first_name_or_last_name_or_email_or_country_or_company_name_cont, 
+    oninput: 'this.form.requestSubmit();', 
+    autofocus: true,
+    style: 'width: 100%;',
+    placeholder: 'Search'
+  %>
+  <%#= f.submit %>
 <% end %>
-<hr>
+<br>
 <br>
 
 <div style="display: flex;">
