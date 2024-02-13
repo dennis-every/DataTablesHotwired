@@ -1,4 +1,25 @@
-<h1>Employees</h1>
+<h1><%= link_to 'Employees', employees_path %></h1>
+
+<%= search_form_for @q do |f| %>
+  <%= f.label :first_name_or_last_name_or_email_or_country_cont %>
+  <%= f.search_field :first_name_or_last_name_or_email_or_country_cont %>
+  <br>
+  <hr>
+  <br>
+  <%= f.label :first_name_cont %>
+  <%= f.search_field :first_name_cont %> <br>
+  <%= f.label :last_name_cont %>
+  <%= f.search_field :last_name_cont %> <br>
+  <%= f.label :email_cont %>
+  <%= f.search_field :email_cont %> <br>
+  <%= f.label :birthday_eq %>
+  <%= f.date_field :birthday_eq %> <br>
+  <%= f.label :country_eq %>
+  <%= f.select :country_eq, Employee.pluck(:country).uniq, {include_blank: true}, style: 'width: 200px;' %> <br>
+  <%= f.label :active_eq %>
+  <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;' %> <br>
+  <%= f.submit %>
+<% end %>
 
 <table>
   <thead>
@@ -17,10 +38,10 @@
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
-        <td><%= employee.first_name %></td>
-        <td><%= employee.last_name %></td>
+        <td><%= highlight employee.first_name, params.dig(:q, :first_name_cont) %></td>
+        <td><%= highlight employee.last_name, params.dig(:q, :last_name_cont) %></td>
         <td><%= employee.phone %></td>
-        <td><%= employee.email %></td>
+        <td><%= highlight employee.email, params.dig(:q, :email_cont) %></td>
         <td><%= employee.birthday %></td>
         <td><%= employee.country %></td>
         <td><%= employee.active %></td>
