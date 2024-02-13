@@ -54,14 +54,14 @@
       <% @employees.each_with_index do |employee, index| %>
         <tr>
           <td><%= index + 1 %></td>
-          <td><%= highlight employee.first_name, params.dig(:q, :first_name_cont) %></td>
-          <td><%= highlight employee.last_name, params.dig(:q, :last_name_cont) %></td>
+          <td><%= highlight employee.first_name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
+          <td><%= highlight employee.last_name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
           <td><%= employee.phone %></td>
-          <td><%= highlight employee.email, params.dig(:q, :email_cont) %></td>
+          <td><%= highlight employee.email, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
           <td><%= employee.birthday %></td>
-          <td><%= employee.country %></td>
+          <td><%= highlight employee.country, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
           <td><%= employee.active %></td>
-          <td><%= highlight employee.company.name, params.dig(:q, :company_name_cont) %></td>
+          <td><%= highlight employee.company.name, params.dig(:q, :first_name_or_last_name_or_email_or_country_or_company_name_cont) %></td>
           <td><%= link_to 'Show', employee, data: { turbo_frame: '_top' } %></td>
         </tr>
       <% end %>
