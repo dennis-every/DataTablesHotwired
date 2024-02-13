@@ -32,7 +32,7 @@
   <%= f.submit %>
 <% end %>
 
-<%= turbo_frame_tag :results do %>
+<%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
   <h1><%= Time.zone.now %></h1>
   <%== pagy_nav(@pagy) %>
   <table>
