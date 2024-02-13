@@ -33,7 +33,13 @@
     style: 'width: 200px;',
     onchange: 'this.form.requestSubmit();' 
   %>
-  <%= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') %>
+  <%#= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') %>
+  <%= f.collection_check_boxes(:company_name_in, Company.all, :name, :name, {}, onchange: 'this.form.requestSubmit();') do |checkbox| %>
+    <div>
+      <%= checkbox.check_box %>
+      <%= checkbox.label %>
+    </div>
+  <% end %>
   <br>
   <%= f.label :active_eq %>
   <%= f.select :active_eq, [true, false], {include_blank: true}, style: 'width: 200px;', onchange: 'this.form.requestSubmit();' %> <br>
