@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Demo Ruby on Rails 7 app to show how to replace datatables with Hotwire.
 
-Things you may want to cover:
+- Ruby 3.2.2
 
-* Ruby version
+- Rails 7.1.3
 
-* System dependencies
+- Database: Sqlite
 
-* Configuration
+# How to run
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+mkdir DataTablesHotwired
+git clone git@github.com:dennis-every/DataTablesHotwired.git
+cd DataTablesHotwired
+bundle install
+rails db:create db:migrate db:seed
+rails server
+```
